@@ -132,13 +132,13 @@ $ export ENROOT_LOGIN_SHELL=no
 
 ## Incompatibility of the hook-injected resources inside certain containers
 
-In certain containers, the hook-injected resources, such as `libfabric`, the `aws-ofi-nccl` plugin, or the `slurm` components, may cause a crash due to the incompatibility between the hook-injected resources and the libraries inside the container image. Specifically, the container images with glibc <2.38 (e.g., Ubuntu 22.04, Debian 12, RHEL 9 derivatives, SUSE 15.5) may encounter incompatibility crashes (e.g., `Failed to initialize any NET plugin`) due to the host resources linked to glibc 2.38.
+In certain containers, the hook-injected resources, such as `libfabric`, the `aws-ofi-nccl` plugin, or the `slurm` components, may cause a crash due to the incompatibility between the hook-injected resources and the libraries inside the container image. Specifically, the container images with glibc <2.38 (e.g., Ubuntu 22.04, Debian 12, RHEL 9 derivatives, SUSE 15.5) may encounter incompatibility crashes (e.g., `Failed to initialize any NET plugin`) due to the host resources linked to glibc >=2.38.
 
 To avoid this, the following workarounds can be attempted:
 
  - For the crashes related to Slurm/munge, if the container does not require Slurm commands inside, users may disable the Slurm injection by modifying the EDF as follows:
     - Add `ENROOT_SLURM_HOOK="0"` to the `[env]` table.
     - Bind mount `/etc/slurm:/etc/slurm`.
- - For the crashes related to network libraries (i.e., `libfabric` or `aws-ofi-nccl`), users may inject such libraries from a pre-build artifact instead of from the host by by modifying the EDF as follows:
+ - For the crashes related to network libraries (i.e., `libfabric` or `aws-ofi-nccl`), users may inject such libraries from a pre-build artifact instead of from the host by modifying the EDF as follows:
     - Add `com.hooks.netstack.source="artifact"` to the `[annotations]` table.
  - Alternatively, users may rebuild the container image with a base image with glibc >=2.38 (e.g., Ubuntu 24.04, Debian 13, or RHEL 10 family).
