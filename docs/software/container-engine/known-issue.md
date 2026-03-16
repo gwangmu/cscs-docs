@@ -132,7 +132,7 @@ $ export ENROOT_LOGIN_SHELL=no
 
 ## Incompatibility of the hook-injected resources inside certain containers
 
-In certain containers, the hook-injected resources, such as `libfabric`, the `aws-ofi-nccl` plugin, or the `slurm` components, may cause a crash due to the incompatibility between the hook-injected resources and the libraries inside the container image. Specifically, the container images with glibc <2.38 (e.g., Ubuntu 22.04, Debian 12, RHEL 9 derivatives, SUSE 15.5) may encounter incompatibility crashes (e.g., `Failed to initialize any NET plugin`) due to the hook-injected resources linked to glibc >=2.38.
+In certain containers, the hook-injected resources, such as `libfabric`, the `aws-ofi-nccl` plugin, or the `slurm` components, may cause a crash due to the incompatibility between the hook-injected resources and the in-container libraries. Specifically, the container images with glibc <2.38 (e.g., Ubuntu 22.04, Debian 12, RHEL 9 derivatives, SUSE 15.5) may encounter incompatibility crashes (e.g., `Failed to initialize any NET plugin`) due to the hook-injected resources linked to glibc >=2.38.
 
 To avoid this, the following workarounds can be attempted:
 
