@@ -138,7 +138,7 @@ To avoid this, the following workarounds can be attempted:
 
  - For the crashes related to Slurm/munge, if the container does not require Slurm commands inside, users may disable the Slurm injection by modifying the EDF as follows:
     - Add `ENROOT_SLURM_HOOK="0"` to the `[env]` table.
-    - Bind mount `/etc/slurm:/etc/slurm`.
+    - Add `/etc/slurm:/etc/slurm` to a `mount` entry.
  - For the crashes related to network libraries (i.e., `libfabric` or `aws-ofi-nccl`), users may inject such libraries from a pre-build artifact instead of from the host by modifying the EDF as follows:
     - Add `com.hooks.netstack.source="artifact"` to the `[annotations]` table.
  - Alternatively, users may rebuild the container image with a base image with glibc >=2.38 (e.g., Ubuntu 24.04, Debian 13, or RHEL 10 family).
